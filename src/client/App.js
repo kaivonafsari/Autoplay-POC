@@ -118,7 +118,6 @@ class App extends Component {
   }
 
   switchPages(){
-    console.log("--switchPages");
     if (this.state.isHomePage){
       this.revealPlayer();
       this.autoplayVideoIfPossible();
@@ -140,7 +139,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">React 16 Autoplay POC - { this.state.isHomePage ? 'Home Page' : 'Watch Page'}</h1>
         </header>
+        {/*Button that switches pages*/}
         <div className="switch-btn" onClick={this.switchPages}>Switch Pages</div>
+        
+        {/*Container that holds the vide oelement and ad container*/}
         <div className="dfp-container">
           <video id="player" className={playerStyles} controls={true}
             ref="player"
@@ -148,6 +150,8 @@ class App extends Component {
           </video>
           <div className="adContainer" ref="adContainer"></div>
         </div>
+        
+        {/*Child components of app*/}
         { this.state.isHomePage ? <Home /> : <Watch playerRef={this.refs.player} revealPlayer={this.revealPlayer} autoplayVideoIfPossible={this.autoplayVideoIfPossible} stopAndHidePlayer={this.stopAndHidePlayer} /> }
       </div>
     );
