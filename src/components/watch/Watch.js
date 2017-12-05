@@ -7,8 +7,8 @@ class Watch extends Component {
   }
 
   componentDidMount(){
-    this.props.revealPlayer();
-    this.props.autoplayVideoIfPossible();
+    // this.props.revealPlayer();
+    // this.props.autoplayVideoIfPossible();
   }
 
   componentWillUnmount(){

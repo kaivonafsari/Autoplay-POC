@@ -14,6 +14,20 @@
   padding: 20px 0;
   text-transform: uppercase;
 }
+.dfp-container{
+  position: relative;
+}
+
+video {
+  left: 0;
+}
+
+.adContainer{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 20;
+}
 
 #player.player-hidden{
   height: 0;
