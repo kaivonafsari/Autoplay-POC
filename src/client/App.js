@@ -119,9 +119,11 @@ class App extends Component {
 
   switchPages(){
     console.log("--switchPages");
+    if (this.state.isHomePage){
+      this.revealPlayer();
+      this.autoplayVideoIfPossible();
+    }
     this.setState({isHomePage: !this.state.isHomePage});
-    this.revealPlayer();
-    this.autoplayVideoIfPossible();
   }
 
   render() {
