@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import logo from '../static/logo.svg';
 import './App.css';
 import classnames from 'classnames';
-import Watch from '../components/watch/Watch';
-import Home from '../components/home/Home';
 import { initializeAds, dfp } from '@vevo/dfp-js';
+import { Link } from 'react-router';
 
 let AD_TAG = {
   adUnitCode: '/40576787/oo/dt/html5',
@@ -48,6 +47,8 @@ class App extends Component {
     // Test for autoplay support with our content player.
     this.setupDFP();
     this.ads.request(AD_TAG);
+
+    /*make a not about this section, since the promise is async we cannot setup DFP inside the promise*/
 
     // this.refs.player.play().then(() => {
     //   // If we make it here, autoplay works. Pause content and play ads.
@@ -108,12 +109,28 @@ class App extends Component {
     }
   }
 
+  destroyDFP(){
+    if (this.ads){      
+      let dfpEvents= dfp.events.AdEvent;
+
+      //these is a remove all event listeners
+      Object.keys(dfpEvents).forEach((key)=>{
+        if (this.eventListenerCbs[key]){
+          this.ads.removeEventListener(dfpEvents[key], this.eventListenerCbs[key]); 
+        }
+      });
+
+      this.ads.destroy();
+    }
+  }
+
   revealPlayer(){
     this.setState({playerVisible: true});
   }
 
   stopAndHidePlayer(){
     this.refs.player.pause();
+    this.destroyDFP();
     this.setState({playerVisible: false});
   }
 
@@ -140,7 +157,10 @@ class App extends Component {
           <h1 className="App-title">React 16 Autoplay POC - { this.state.isHomePage ? 'Home Page' : 'Watch Page'}</h1>
         </header>
         {/*Button that switches pages*/}
-        <div className="switch-btn" onClick={this.switchPages}>Switch Pages</div>
+        <div className="switch-btns">
+          <div className="home-btn"><Link to="/">Home</Link></div>
+          <div className="watch-btn"><Link to="/watch">Watch</Link></div>
+        </div>
         
         {/*Container that holds the vide oelement and ad container*/}
         <div className="dfp-container">
@@ -152,7 +172,15 @@ class App extends Component {
         </div>
         
         {/*Child components of app*/}
-        { this.state.isHomePage ? <Home /> : <Watch playerRef={this.refs.player} revealPlayer={this.revealPlayer} autoplayVideoIfPossible={this.autoplayVideoIfPossible} stopAndHidePlayer={this.stopAndHidePlayer} /> }
+        { React.Children.map(this.props.children, (child) => {
+            // console.log("==== working on child: ", child);
+            return React.cloneElement(child, {
+                revealPlayer: this.revealPlayer,
+                autoplayVideoIfPossible: this.autoplayVideoIfPossible,
+                stopAndHidePlayer: this.stopAndHidePlayer
+            });
+
+        }) }
       </div>
     );
   }
