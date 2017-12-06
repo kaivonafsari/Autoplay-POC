@@ -4,6 +4,9 @@ import './App.css';
 import classnames from 'classnames';
 import { initializeAds, dfp } from '@vevo/dfp-js';
 import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as AppActions from '../actions/appActions'
 
 let AD_TAG = {
   adUnitCode: '/40576787/oo/dt/html5',
@@ -143,6 +146,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("--appProps", this.props);
 
     let playerStyles = classnames({
       "player": true,
@@ -158,7 +162,7 @@ class App extends Component {
         </header>
         {/*Button that switches pages*/}
         <div className="switch-btns">
-          <div className="home-btn"><Link to="/">Home</Link></div>
+          <div className="home-btn" onClick={this.props.actions.testAction}><Link to="/">Home</Link></div>
           <div className="watch-btn"><Link to="/watch">Watch</Link></div>
         </div>
         
@@ -186,4 +190,16 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state, props){
+  return {
+    test: state.AppReducers
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    actions: bindActionCreators(AppActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -6,5 +6,10 @@ import { browserHistory } from 'react-router';
 
 import Routes from './routes';
 
-ReactDOM.render(<Routes history={browserHistory} />, document.getElementById('root'));
+import { Provider } from 'react-redux';
+import Store from './store';
+
+const storeInstance = Store();
+
+ReactDOM.render(<Provider store={storeInstance}><Routes history={browserHistory} /></Provider>, document.getElementById('root'));
 registerServiceWorker();
