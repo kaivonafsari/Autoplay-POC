@@ -163,7 +163,7 @@ class App extends Component {
         {/*Button that switches pages*/}
         <div className="switch-btns">
           <div className="home-btn" onClick={this.props.actions.testAction}><Link to="/">Home</Link></div>
-          <div className="watch-btn"><Link to="/watch">Watch</Link></div>
+          <div className="watch-btn" onClick={this.switchPages}><Link to="/watch">Watch</Link></div>
         </div>
         
         {/*Container that holds the vide oelement and ad container*/}
