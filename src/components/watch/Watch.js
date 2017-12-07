@@ -7,11 +7,12 @@ class Watch extends Component {
   }
 
   componentDidMount(){
-    this.props.revealPlayer();
+    this.props.actions.storePlayerVisible(true);
+    this.props.actions.testAction();
   }
 
   componentWillUnmount(){
-    this.props.stopAndHidePlayer();
+    this.props.actions.storePlayerVisible(false);
   }
 
   render() {

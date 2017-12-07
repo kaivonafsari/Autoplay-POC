@@ -7,3 +7,11 @@ export const testAction = (string) => {
 		string: "yolo"
 	};
 }
+
+export const storePlayerVisible = (boolean) => {
+	console.log("--storePlayerVisible", boolean);
+	return {
+		type: 'PLAYER_VISIBLE',
+		boolean
+	};
+}

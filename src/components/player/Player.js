@@ -23,16 +23,18 @@ class Player extends Component {
   constructor(props){
     super(props);
     this.state = {
-      playerVisible: false
+      playerVisible: false,
+      hasAutoPlay: false
     }
 
-    this.autoplayVideoIfPossible = this.autoplayVideoIfPossible.bind(this);
+    this.checkIfHasAutoplay = this.checkIfHasAutoplay.bind(this);
     this.revealPlayer = this.revealPlayer.bind(this);
     this.stopAndHidePlayer = this.stopAndHidePlayer.bind(this);
     this.onAllAdsComplete = this.onAllAdsComplete.bind(this);
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.onTimeUpdate = this.onTimeUpdate.bind(this);
+    this.beginAds = this.beginAds.bind(this);
     this.onAllContentComplete = this.onAllContentComplete.bind(this);
 
     this.eventListenerCbs = {
@@ -44,23 +46,29 @@ class Player extends Component {
     }
   }
 
-  autoplayVideoIfPossible() {
-    this.refs.player.load();
-    // Test for autoplay support with our content player.
+  beginAds(){
+  	this.refs.player.load();
     this.setupDFP();
     this.ads.request(AD_TAG);
+  }
+
+  checkIfHasAutoplay() {
+    this.refs.player.load();
+    // Test for autoplay support with our content player.
 
     /*make a not about this section, since the promise is async we cannot setup DFP inside the promise*/
 
-    // this.refs.player.play().then(() => {
-    //   // If we make it here, autoplay works. Pause content and play ads.
-    //   this.refs.player.pause();
-    //   this.setupDFP();
-    //   this.ads.request(AD_TAG);
-    // }, () => {
-    //   // If we make it here, autoplay doesn't work. Show the play button.
-    //   console.log("--Doesn't autoplay");
-    // });
+    this.refs.player.play().then(() => {
+      // If we make it here, autoplay works. Pause content and play ads.
+      this.refs.player.pause();
+      this.setState({hasAutoPlay: true});
+      return true;
+    }, () => {
+      // If we make it here, autoplay doesn't work. Show the play button.
+      console.log("--Doesn't autoplay");
+      this.setState({hasAutoPlay: false});
+      return false;
+    });
   }
 
   onTimeUpdate(){
@@ -139,16 +147,23 @@ class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-  	if (nextProps.playerVisible) {
+  	if (nextProps.playerVisible && !this.props.playerVisible) {
   		this.revealPlayer();
-  		this.autoplayVideoIfPossible();
+  		this.beginAds();
   	} else {
   		this.stopAndHidePlayer();
   	}
   }
 
-  render() {
+  componentDidMount(){
+  	if (this.props.playerVisible && this.checkIfHasAutoplay()){
+  		this.revealPlayer();
+  		this.beginAds();
+  	}
+  }
 
+
+  render() {
     let playerStyles = classnames({
       "player": true,
       "player-visible": this.state.playerVisible,
@@ -173,7 +188,7 @@ class Player extends Component {
 
 function mapStateToProps(state, props){
   return {
-    videoState: state.AppReducers.string
+    playerVisible: state.AppReducers.get('playerVisible')
   }
 }
 

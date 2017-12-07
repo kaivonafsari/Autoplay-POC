@@ -7,7 +7,7 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    this.props.stopAndHidePlayer();
+    this.props.actions.testAction();
   }
 
   render() {

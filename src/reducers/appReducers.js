@@ -1,11 +1,17 @@
+import Immutable from 'immutable';
+
 /*App Reducers*/
-export default(state = {}, payload) => {
+export default(store = (new Immutable.Map()), payload) => {
 	switch(payload.type){
 		case 'TEST':
-			state.string = payload.string
-			return state;
+			store = store.set('test', payload.string)
+			return store;
+
+		case 'PLAYER_VISIBLE':
+			store = store.set('playerVisible', payload.boolean)
+			return store;
 
 		default:
-			return state;
+			return store;
 	}
 };
