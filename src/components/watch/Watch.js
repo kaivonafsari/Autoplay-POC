@@ -7,6 +7,7 @@ class Watch extends Component {
   }
 
   componentDidMount(){
+    this.props.revealPlayer();
   }
 
   componentWillUnmount(){
