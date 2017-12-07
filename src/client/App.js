@@ -192,7 +192,7 @@ class App extends Component {
 
 function mapStateToProps(state, props){
   return {
-    test: state.AppReducers
+    test: state.AppReducers.string
   }
 }
 

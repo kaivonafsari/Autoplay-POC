@@ -1,8 +1,8 @@
 /*App Reducers*/
-export default(state = {}, action) => {
-	switch(action.type){
+export default(state = {}, payload) => {
+	switch(payload.type){
 		case 'TEST':
-			state[action.string] = action.string
+			state.string = payload.string
 			return state;
 
 		default:
