@@ -8,6 +8,7 @@ import { initializeAds, dfp } from '@vevo/dfp-js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as AppActions from '../../actions/appActions';
+import videoArray from '../../services/mockService';
 
 let AD_TAG = {
   adUnitCode: '/40576787/oo/dt/html5',
@@ -24,7 +25,8 @@ class Player extends Component {
     super(props);
     this.state = {
       playerVisible: false,
-      adStarted: false
+      adStarted: false,
+      currentSrc: ""
     }
     this.adStarted = false;
 
@@ -47,10 +49,22 @@ class Player extends Component {
   }
 
   beginAds(){
+  	this.setVideoSrc();
   	this.refs.player.load();
     this.setupDFP();
     this.ads.request(AD_TAG);
     this.setState({adStarted: true});
+  }
+
+  setVideoSrc(){
+  	let currentIndex = videoArray.indexOf(this.state.currentSrc);
+  	let nextIndex = currentIndex+1;
+
+		if (videoArray[nextIndex]){
+  		this.setState({currentSrc: videoArray[nextIndex]});
+		} else {
+			this.setState({currentSrc: videoArray[0]});
+		}
   }
 
   onTimeUpdate(){
@@ -63,6 +77,7 @@ class Player extends Component {
 
   onAllContentComplete(){
     console.log("--onAllContentComplete")
+    this.setVideoSrc();
     this.refs.player.load();
     this.ads.request(AD_TAG);
   }
@@ -158,7 +173,7 @@ class Player extends Component {
         <div className="dfp-container">
           <video id="player" className={playerStyles} controls={true}
             ref="player"
-            src="//h264-aws.vevo.com/v3/h264/2016/06/USCJY1531545/5fae8f50-1dc0-4a2b-9b28-3c037de055bc/uscjy1531545_high_1280x720_h264_2000_aac_128.mp4">
+            src={this.state.currentSrc}>
           </video>
           <div className="adContainer" ref="adContainer"></div>
           <div onClick={this.beginAds} className={videoPosterStyles}>VIDEO POSTER</div>
