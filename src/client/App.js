@@ -30,13 +30,11 @@ class App extends Component {
       playPromise.then((res) => {
         // Automatic playback started!
         this.refs.testPlayer.pause();
-        console.log("--There is Autoplay", res);
         this.setState({hasAutoPlay: true});
         return true;
       })
       .catch(error => {
         // Auto-play was prevented
-        console.log("--Doesn't autoplay", error);
         this.setState({hasAutoPlay: false});
         return false;
       });

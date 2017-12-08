@@ -41,6 +41,7 @@ video {
   background-color: red;
   color: white;
   opacity: 1;
+  cursor: pointer;
 }
 
 .adContainer{
