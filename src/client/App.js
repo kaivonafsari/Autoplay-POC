@@ -11,12 +11,40 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
+      hasAutoPlay: false
     }
   }
 
-  render() {
-    console.log("--appProps", this.props);
+  componentDidMount(){
+    this.checkIfHasAutoplay();
+  }
 
+  checkIfHasAutoplay() {
+    this.refs.testPlayer.load();
+    // Test for autoplay support with our content player.
+
+    /*make a note about this section, since the promise is async we cannot setup DFP inside the promise*/
+    let playPromise = this.refs.testPlayer.play();
+
+    if (playPromise !== undefined) {
+      playPromise.then((res) => {
+        // Automatic playback started!
+        this.refs.testPlayer.pause();
+        console.log("--There is Autoplay", res);
+        this.setState({hasAutoPlay: true});
+        return true;
+      })
+      .catch(error => {
+        // Auto-play was prevented
+        console.log("--Doesn't autoplay", error);
+        this.setState({hasAutoPlay: false});
+        return false;
+      });
+    }
+
+  }
+
+  render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -28,8 +56,12 @@ class App extends Component {
           <div className="home-btn"><Link to="/">Home</Link></div>
           <div className="watch-btn"><Link to="/watch">Watch</Link></div>
         </div>
+        <video id="test-player" className="test-player" controls={true}
+          ref="testPlayer"
+          src="//h264-aws.vevo.com/v3/h264/2016/06/USCJY1531545/5fae8f50-1dc0-4a2b-9b28-3c037de055bc/uscjy1531545_high_1280x720_h264_2000_aac_128.mp4">
+        </video>
         
-        <Player {...this.props} />
+        <Player {...this.props} hasAutoPlay={this.state.hasAutoPlay} />
         {/*Child components of app*/}
         { React.Children.map(this.props.children, (child) => {
             // console.log("==== working on child: ", child);

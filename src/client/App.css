@@ -22,6 +22,27 @@ video {
   left: 0;
 }
 
+.test-player{
+  opacity: 0;
+  height: 0;
+}
+
+.video-poster {
+  opacity: 0;
+  height: 0;
+}
+.video-poster.visible{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 20;
+  background-color: red;
+  color: white;
+  opacity: 1;
+}
+
 .adContainer{
   position: absolute;
   left: 0;
