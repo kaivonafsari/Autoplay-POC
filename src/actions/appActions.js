@@ -1,9 +1,9 @@
 /*App Actions*/
 
-export const testAction = (string) => {
+export const hasUserGesture = () => {
 	return {
-		type: 'TEST',
-		string: "yolo"
+		type: 'HAS_USER_GESTURE',
+		boolean: true
 	};
 }
 

@@ -145,7 +145,7 @@ class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-  	if (nextProps.playerVisible && !this.adStarted && nextProps.hasAutoPlay) {
+  	if (nextProps.playerVisible && !this.adStarted && (nextProps.hasAutoPlay || nextProps.hasUserGesture)) {
   		this.revealPlayer();
   		this.beginAds();
   	} else if (!nextProps.playerVisible && this.props.playerVisible) {

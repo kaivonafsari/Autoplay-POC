@@ -3,8 +3,8 @@ import Immutable from 'immutable';
 /*App Reducers*/
 export default(store = (new Immutable.Map()), payload) => {
 	switch(payload.type){
-		case 'TEST':
-			store = store.set('test', payload.string)
+		case 'HAS_USER_GESTURE':
+			store = store.set('hasUserGesture', payload.boolean)
 			return store;
 
 		case 'PLAYER_VISIBLE':

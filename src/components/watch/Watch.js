@@ -8,7 +8,6 @@ class Watch extends Component {
 
   componentDidMount(){
     this.props.actions.storePlayerVisible(true);
-    this.props.actions.testAction();
   }
 
   componentWillUnmount(){

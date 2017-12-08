@@ -44,13 +44,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App" onClick={this.props.actions.hasUserGesture}>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">React 16 Autoplay POC</h1>
         </header>
         {/*Button that switches pages*/}
-        <div className="switch-btns" onClick={this.props.actions.testAction}>
+        <div className="switch-btns" >
           <div className="home-btn"><Link to="/">Home</Link></div>
           <div className="watch-btn"><Link to="/watch">Watch</Link></div>
         </div>
@@ -78,7 +78,7 @@ class App extends Component {
 
 function mapStateToProps(state, props){
   return {
-    test: state
+    hasUserGesture: state.AppReducers.get('hasUserGesture')
   }
 }
 

@@ -7,7 +7,6 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    this.props.actions.testAction();
   }
 
   render() {
