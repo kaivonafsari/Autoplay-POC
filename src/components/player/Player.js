@@ -28,9 +28,7 @@ class Player extends Component {
       adStarted: false,
       currentSrc: ""
     }
-    this.adStarted = false;
 
-    this.revealPlayer = this.revealPlayer.bind(this);
     this.stopAndHidePlayer = this.stopAndHidePlayer.bind(this);
     this.onAllAdsComplete = this.onAllAdsComplete.bind(this);
     this.pause = this.pause.bind(this);
@@ -48,6 +46,9 @@ class Player extends Component {
     }
   }
 
+  /*
+	Begin ad playback
+  */
   beginAds(){
   	this.setVideoSrc();
   	this.refs.player.load();
@@ -56,25 +57,31 @@ class Player extends Component {
     this.setState({adStarted: true});
   }
 
+  /*
+	Sets the video src of the video element
+  */
   setVideoSrc(){
-  	let currentIndex = videoArray.indexOf(this.state.currentSrc);
-  	let nextIndex = currentIndex+1;
-
-		if (videoArray[nextIndex]){
-  		this.setState({currentSrc: videoArray[nextIndex]});
-		} else {
-			this.setState({currentSrc: videoArray[0]});
-		}
+  	let currentIndex = videoArray.indexOf(this.props.videoSource);
+  	this.props.actions.getVideoSrc(currentIndex);
   }
 
+  /*
+	Updates the adTime
+  */
   onTimeUpdate(){
     console.log("--onTimeUpdate");
   }
 
+  /*
+	What to do when the ad completes
+  */
   onAllAdsComplete(){
     console.log("--onAllAdsComplete");
   }
 
+  /*
+	Sets a new video src and requests another ad
+  */
   onAllContentComplete(){
     console.log("--onAllContentComplete")
     this.setVideoSrc();
@@ -82,14 +89,24 @@ class Player extends Component {
     this.ads.request(AD_TAG);
   }
 
+  /*
+	DFP event handler
+  */
   play(){
     this.refs.player.play();
   }
 
+  /*
+	DFP event handler
+  */
   pause(){
     this.refs.player.pause();
   }
 
+
+  /*
+	Sets up DFP
+  */
   setupDFP(){
     let adsConfig = {
       videoElement: this.refs.player,
@@ -116,8 +133,11 @@ class Player extends Component {
     }
   }
 
+  /*
+	Tears down DFP
+  */
   destroyDFP(){
-    if (this.ads){      
+    if (this.ads){
       let dfpEvents= dfp.events.AdEvent;
 
       //these is a remove all event listeners
@@ -132,11 +152,10 @@ class Player extends Component {
     }
   }
 
-  revealPlayer(){
-    this.setState({playerVisible: true});
-  }
 
-
+  /*
+	When unmounting a watch page, stop and hide the player
+  */
   stopAndHidePlayer(){
     this.refs.player.pause();
     this.destroyDFP();
@@ -145,8 +164,7 @@ class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-  	if (nextProps.playerVisible && !this.adStarted && (nextProps.hasAutoPlay || nextProps.hasUserGesture)) {
-  		this.revealPlayer();
+  	if (nextProps.playerVisible && !this.state.adStarted && (nextProps.hasAutoPlay || nextProps.hasUserGesture)) {
   		this.beginAds();
   	} else if (!nextProps.playerVisible && this.props.playerVisible) {
   		this.stopAndHidePlayer();
@@ -172,7 +190,7 @@ class Player extends Component {
         <div className="dfp-container">
           <video id="player" className={playerStyles} controls={true}
             ref="player"
-            src={this.state.currentSrc}>
+            src={this.props.videoSource}>
           </video>
           <div className="adContainer" ref="adContainer"></div>
           <div onClick={this.beginAds} className={videoPosterStyles}>VIDEO POSTER</div>
@@ -185,7 +203,8 @@ class Player extends Component {
 
 function mapStateToProps(state, props){
   return {
-    playerVisible: state.AppReducers.get('playerVisible')
+    playerVisible: state.AppReducers.get('playerVisible'),
+    videoSource: state.AppReducers.get('videoSource')
   }
 }
 

@@ -11,6 +11,11 @@ export default(store = (new Immutable.Map()), payload) => {
 			store = store.set('playerVisible', payload.boolean)
 			return store;
 
+		case 'VIDEO_SRC':
+			console.log("--sourceReducer", payload.src)
+			store = store.set('videoSource', payload.src)
+			return store;
+
 		default:
 			return store;
 	}
