@@ -65,9 +65,7 @@ class App extends Component {
             // console.log("==== working on child: ", child);
             return React.cloneElement(child, {
                 autoplayVideoIfPossible: this.autoplayVideoIfPossible,
-                actions: this.props.actions,
-                playerRef: this.props.playerRef,
-                videoState: this.props.videoState
+                actions: this.props.actions
             });
 
         }) }
@@ -78,9 +76,7 @@ class App extends Component {
 
 function mapStateToProps(state, props){
   return {
-    hasUserGesture: state.AppReducers.get('hasUserGesture'),
-    playerRef: state.AppReducers.get('playerRef'),
-    videoState: state.AppReducers.get('videoState')
+    hasUserGesture: state.AppReducers.get('hasUserGesture')
   }
 }
 

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as AppActions from '../../actions/appActions';
 
 class Watch extends Component {
   constructor(props){
@@ -37,4 +40,18 @@ class Watch extends Component {
   }
 }
 
-export default Watch;
+function mapStateToProps(state, props){
+  return {
+    hasUserGesture: state.AppReducers.get('hasUserGesture'),
+    playerRef: state.AppReducers.get('playerRef'),
+    videoState: state.AppReducers.get('videoState')
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    actions: bindActionCreators(AppActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Watch);
