@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../static/logo.svg';
+import logo from '../static/vevo-animated.svg';
 import './App.css';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';

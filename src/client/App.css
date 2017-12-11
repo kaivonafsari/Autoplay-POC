@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 60px;
+  height: 42px;
 }
 
 .switch-btns{
@@ -64,6 +64,12 @@ video {
   color: white;
   opacity: 1;
   cursor: pointer;
+}
+
+.poster-text{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .adContainer{

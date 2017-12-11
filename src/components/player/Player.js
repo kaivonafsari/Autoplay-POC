@@ -227,10 +227,15 @@ class Player extends Component {
         <div className="dfp-container">
           <video id="player" className={playerStyles} controls={true}
             ref="player"
+            playsInline={true}
             src={this.props.videoSource}>
           </video>
           <div className="adContainer" ref="adContainer"></div>
-          <div onClick={this.beginAds} className={videoPosterStyles}>VIDEO POSTER</div>
+          <div onClick={this.beginAds} className={videoPosterStyles}>
+            <div className="poster-text">
+              VIDEO POSTER
+            </div>
+          </div>
         </div>
         
       </div>

@@ -1,0 +1,186 @@
+<svg id="vevo_wordmark" xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 115 31">
+  <defs>
+    <style>
+#v {
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-name: slideinV;
+          animation-name: slideinV;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+#v-clip {that 
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-name: slideinVClip;
+          animation-name: slideinVClip;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+#evo-clip {
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-name: slideinEVOClip;
+          animation-name: slideinEVOClip;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+#evo {
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-name: slideleftEVO;
+          animation-name: slideleftEVO;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+@-webkit-keyframes slideinV {
+  0% {
+    -webkit-transform: translate(23.6px);
+            transform: translate(23.6px);
+  }
+  30% {
+    -webkit-transform: translate(23.6px);
+            transform: translate(23.6px);
+  }
+
+  60% {
+    -webkit-transform: translate(39.8px);
+            transform: translate(39.8px);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes slideinV {
+  0% {
+    -webkit-transform: translate(23.6px);
+            transform: translate(23.6px);
+  }
+  
+  30% {
+    -webkit-transform: translate(23.6px);
+            transform: translate(23.6px);
+  }
+
+  60% {
+    -webkit-transform: translate(39.8px);
+            transform: translate(39.8px);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@-webkit-keyframes slideinVClip {
+  0% {
+    -webkit-transform: translate(33px);
+            transform: translate(33px);
+  }
+
+  30% {
+    -webkit-transform: translate(33px);
+            transform: translate(33px);
+  }
+  
+  60% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  
+}
+@keyframes slideinVClip {
+  0% {
+    -webkit-transform: translate(33px);
+            transform: translate(33px);
+  }
+  30% {
+    -webkit-transform: translate(33px);
+            transform: translate(33px);
+  }
+
+  60% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+  
+}
+@-webkit-keyframes slideinEVOClip {
+  0% {
+    -webkit-transform: translate(95.6px);
+            transform: translate(95.6px);
+  }
+  60% {
+    -webkit-transform: translate(95.6px);
+            transform: translate(95.6px);
+  }
+
+  100% {
+    -webkit-transform: translate(0px);
+            transform: translate(0px);
+  }
+}
+@keyframes slideinEVOClip {
+  0% {
+    -webkit-transform: translate(95.6px);
+            transform: translate(95.6px);
+  }
+  60% {
+    -webkit-transform: translate(95.6px);
+            transform: translate(95.6px);
+  }
+
+  100% {
+    -webkit-transform: translate(0px);
+            transform: translate(0px);
+  }
+}
+@-webkit-keyframes slideleftEVO {
+  0% {
+    -webkit-transform: translate(-56.8px);
+            transform: translate(-56.8px);
+  }
+  60% {
+    -webkit-transform: translate(-58.8px);
+            transform: translate(-58.8px);
+  }
+
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+@keyframes slideleftEVO {
+  0% {
+    -webkit-transform: translate(-56.8px);
+            transform: translate(-56.8px);
+  }
+  60% {
+    -webkit-transform: translate(-56.8px);
+            transform: translate(-56.8px);
+  }
+
+  100% {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+  }
+}
+    </style>
+    <clipPath id="clipV">
+          <polygon id="v-clip" points="16.7267173 28.4025955, .57 0, 113 0, 113 29" ></polygon>
+    </clipPath>
+    <clipPath id="clipEvo">
+           <polygon id="evo-clip" points="16.7267173 28.4025955 113 29 113 0 33 0" ></polygon>
+     </clipPath>
+  </defs>
+  <path id="v" fill="#fff" clip-path="url(#clipV)" d="M16.7267173,28.2329772 L1,0.83038168 L10.25934888,0.83038168 L16.7267173,13.2861069 L23.1940857,0.83038168 L32.4534346,0.83038168 L16.7267173,28.2329772 L16.7267173,28.2329772 Z" ></path>
+  <path id="evo" clip-path="url(#clipEvo)" fill="#FFFFFF" d="M70.7691602,28.2329772 L55.0424429,0.83038168 L64.3017918,0.83038168 L70.7691602,13.2861069 L77.2365286,0.83038168 L86.4958775,0.83038168 L70.7691602,28.2329772 L70.7691602,28.2329772 Z M15.7267173,28.2329772 L0,0.83038168 L9.25934888,0.83038168 L15.7267173,13.2861069 L22.1940857,0.83038168 L31.4534346,0.83038168 L15.7267173,28.2329772 L15.7267173,28.2329772 Z M43.2479387,6.64305345 C45.9936551,6.64305345 48.1215675,8.53442567 48.7738916,11.3880916 L37.7110723,11.3880916 C38.4495189,8.42173102 40.4156255,6.64305345 43.2479387,6.64305345 L43.2479387,6.64305345 L43.2479387,6.64305345 Z M57.0085495,14.2351145 C57.0085495,6.37329803 50.8477105,0 43.2479387,0 C35.648167,0 29.487328,6.37329803 29.487328,14.2351145 C29.487328,22.0969311 35.6550473,28.4702291 43.4851907,28.4702291 C49.7393882,28.4702291 54.6439783,24.6900944 56.2755597,19.4546565 L47.9929769,19.4546565 C46.8439659,21.1548037 45.1543765,21.5899237 43.4851907,21.5899237 C40.2839506,21.5899237 38.2440587,19.3864466 37.6039531,16.3703817 L56.8539798,16.3703817 C56.9552864,15.6738101 57.0085495,14.9608681 57.0085495,14.2351145 L57.0085495,14.2351145 L57.0085495,14.2351145 Z M98.7648855,20.878168 C95.2058696,20.878168 92.5963358,18.0311451 92.5963358,14.2351145 C92.5963358,10.439084 95.2081235,7.59206109 98.7648855,7.59206109 C102.323664,7.59206109 104.933435,10.4396771 104.933435,14.2351145 C104.933435,18.0311451 102.323664,20.878168 98.7648855,20.878168 L98.7648855,20.878168 L98.7648855,20.878168 Z M98.7648855,0 C90.9030689,0 84.5297709,6.37329803 84.5297709,14.2351145 C84.5297709,22.0969311 90.9030689,28.4702291 98.7648855,28.4702291 C106.626702,28.4702291 113,22.0969311 113,14.2351145 C113,6.37329803 106.626702,0 98.7648855,0 L98.7648855,0 L98.7648855,0 Z"></path>
+</svg>
