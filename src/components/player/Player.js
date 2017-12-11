@@ -25,8 +25,7 @@ class Player extends Component {
     super(props);
     this.state = {
       playerVisible: false,
-      adStarted: false,
-      currentSrc: ""
+      adStarted: false
     }
 
     this.stopAndHidePlayer = this.stopAndHidePlayer.bind(this);
@@ -55,6 +54,7 @@ class Player extends Component {
     this.setupDFP();
     this.ads.request(AD_TAG);
     this.setState({adStarted: true});
+    this.props.actions.storeAdState('playing');
   }
 
   /*
@@ -76,14 +76,14 @@ class Player extends Component {
 	What to do when the ad completes
   */
   onAllAdsComplete(){
-    console.log("--onAllAdsComplete");
+    this.props.actions.storeAdState('ended');
   }
 
   /*
 	Sets a new video src and requests another ad
   */
   onAllContentComplete(){
-    console.log("--onAllContentComplete")
+    this.props.actions.storeVideoState('ended');
     this.setVideoSrc();
     this.refs.player.load();
     this.ads.request(AD_TAG);
@@ -94,6 +94,7 @@ class Player extends Component {
   */
   play(){
     this.refs.player.play();
+    this.props.actions.storeVideoState('playing');
   }
 
   /*
@@ -101,6 +102,7 @@ class Player extends Component {
   */
   pause(){
     this.refs.player.pause();
+    this.props.actions.storeVideoState('paused');
   }
 
 
@@ -161,6 +163,8 @@ class Player extends Component {
     this.destroyDFP();
     this.setState({playerVisible: false});
     this.setState({adStarted: false});
+    this.props.actions.storeVideoState(null);
+    this.props.actions.storeAdState(null);
   }
 
   componentWillReceiveProps(nextProps){
@@ -204,7 +208,9 @@ class Player extends Component {
 function mapStateToProps(state, props){
   return {
     playerVisible: state.AppReducers.get('playerVisible'),
-    videoSource: state.AppReducers.get('videoSource')
+    videoSource: state.AppReducers.get('videoSource'),
+    adState: state.AppReducers.get('adState'),
+    videoState: state.AppReducers.get('videoState')
   }
 }
 

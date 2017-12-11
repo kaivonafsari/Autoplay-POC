@@ -12,8 +12,15 @@ export default(store = (new Immutable.Map()), payload) => {
 			return store;
 
 		case 'VIDEO_SRC':
-			console.log("--sourceReducer", payload.src)
 			store = store.set('videoSource', payload.src)
+			return store;
+
+		case 'AD_STATE':
+			store = store.set('adState', payload.adState)
+			return store;
+
+		case 'VIDEO_STATE':
+			store = store.set('videoState', payload.videoState)
 			return store;
 
 		default:

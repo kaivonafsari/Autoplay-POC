@@ -15,10 +15,24 @@ export const storePlayerVisible = (boolean) => {
 	};
 }
 
+export const storeAdState = (adState) => {
+	return {
+		type: 'AD_STATE',
+		adState
+	};
+}
+
+export const storeVideoState = (videoState) => {
+	return {
+		type: 'VIDEO_STATE',
+		videoState
+	};
+}
+
 export const getVideoSrc = (currentIndex) => {
   	let nextIndex = currentIndex+1;
   	let videoSrc = "";
-  	
+
 	if (videoArray[nextIndex]){
 		videoSrc = videoArray[nextIndex];
 	} else {
