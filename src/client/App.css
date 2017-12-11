@@ -14,8 +14,22 @@
   padding: 20px 0;
   text-transform: uppercase;
 }
+
+.btn {
+  display: inline-block;
+  width: 50%;
+}
 .dfp-container{
   position: relative;
+}
+
+.pause-btn{
+  display: block;
+}
+
+.player-component{
+  margin: 0 auto;
+  width: 80%;
 }
 
 video {
@@ -38,7 +52,7 @@ video {
   height: 100%;
   width: 100%;
   z-index: 20;
-  background-color: red;
+  background-color: black;
   color: white;
   opacity: 1;
   cursor: pointer;

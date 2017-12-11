@@ -22,6 +22,13 @@ export const storeAdState = (adState) => {
 	};
 }
 
+export const storePlayerRef = (playerRef) => {
+	return {
+		type: 'PLAYER_REF',
+		playerRef
+	}
+}
+
 export const storeVideoState = (videoState) => {
 	return {
 		type: 'VIDEO_STATE',

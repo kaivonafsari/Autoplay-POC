@@ -51,8 +51,8 @@ class App extends Component {
         </header>
         {/*Button that switches pages*/}
         <div className="switch-btns" >
-          <div className="home-btn"><Link to="/">Home</Link></div>
-          <div className="watch-btn"><Link to="/watch">Watch</Link></div>
+          <div className="home-btn btn"><Link to="/">Home</Link></div>
+          <div className="watch-btn btn"><Link to="/watch">Watch</Link></div>
         </div>
         <video id="test-player" className="test-player" controls={true}
           ref="testPlayer"
@@ -64,10 +64,10 @@ class App extends Component {
         { React.Children.map(this.props.children, (child) => {
             // console.log("==== working on child: ", child);
             return React.cloneElement(child, {
-                revealPlayer: this.revealPlayer,
                 autoplayVideoIfPossible: this.autoplayVideoIfPossible,
-                stopAndHidePlayer: this.stopAndHidePlayer,
-                actions: this.props.actions
+                actions: this.props.actions,
+                playerRef: this.props.playerRef,
+                videoState: this.props.videoState
             });
 
         }) }
@@ -78,7 +78,9 @@ class App extends Component {
 
 function mapStateToProps(state, props){
   return {
-    hasUserGesture: state.AppReducers.get('hasUserGesture')
+    hasUserGesture: state.AppReducers.get('hasUserGesture'),
+    playerRef: state.AppReducers.get('playerRef'),
+    videoState: state.AppReducers.get('videoState')
   }
 }
 

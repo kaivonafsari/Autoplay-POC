@@ -23,6 +23,10 @@ export default(store = (new Immutable.Map()), payload) => {
 			store = store.set('videoState', payload.videoState)
 			return store;
 
+		case 'PLAYER_REF':
+			store = store.set('playerRef', payload.playerRef)
+			return store;
+
 		default:
 			return store;
 	}
