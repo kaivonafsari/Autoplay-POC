@@ -24,10 +24,8 @@ class Watch extends Component {
   pauseOrPlayVideo(){
     if (this.props.videoState === "playing"){
       this.props.playerRef.pause();
-      this.props.actions.storeVideoState('pause');
     } else {
       this.props.playerRef.play();
-      this.props.actions.storeVideoState('playing');
     }
   }
 
