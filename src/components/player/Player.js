@@ -26,8 +26,16 @@ class Player extends Component {
     this.state = {
       playerVisible: false,
       adStarted: false
-    }
+    };
 
+    this._videoEvents = [
+        "play",
+        "pause",
+        "ended",
+        "error",
+    ];
+
+    this.playerEventHandlers = this.playerEventHandlers.bind(this);
     this.stopAndHidePlayer = this.stopAndHidePlayer.bind(this);
     this.onAllAdsComplete = this.onAllAdsComplete.bind(this);
     this.pause = this.pause.bind(this);
@@ -47,6 +55,26 @@ class Player extends Component {
 
   componentDidMount(){
     this.props.actions.storePlayerRef(this.refs.player);
+    this._videoEvents.forEach((evt) => this.refs.player.addEventListener(evt, this.playerEventHandlers));
+  }
+
+  playerEventHandlers(evt){
+    if(this.props.adState !== 'playing'){
+      switch(evt.type){
+        case "play":
+          this.props.actions.storeVideoState('playing');
+          break;
+        case "pause":
+          this.props.actions.storeVideoState('paused');
+          break;
+        case "error":
+          this.props.actions.storeVideoState('error');
+          break;
+
+        default:
+          break;
+      }
+    }
   }
 
   /*

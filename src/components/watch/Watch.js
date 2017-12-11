@@ -17,7 +17,10 @@ class Watch extends Component {
   componentWillUnmount(){
     this.props.actions.storePlayerVisible(false);
   }
-
+  
+  /*
+    Pauses or plays the music video
+  */
   pauseOrPlayVideo(){
     if (this.props.videoState === "playing"){
       this.props.playerRef.pause();
@@ -33,7 +36,7 @@ class Watch extends Component {
       <div className="watch">
         Watch Page
         <div className="pause-btn" onClick={this.pauseOrPlayVideo}>
-          {`${this.props.videoState == "playing" ? "Pause" : "Play"} Music Video`}
+          {`${this.props.videoState === "playing" ? "Pause" : "Play"} Music Video`}
         </div>
       </div>
     );
