@@ -161,8 +161,7 @@ class Player extends Component {
   stopAndHidePlayer(){
     this.refs.player.pause();
     this.destroyDFP();
-    this.setState({playerVisible: false});
-    this.setState({adStarted: false});
+    this.setState({playerVisible: false, adStarted: false});
     this.props.actions.storeVideoState(null);
     this.props.actions.storeAdState(null);
   }
