@@ -25,6 +25,14 @@
 
 .pause-btn{
   display: block;
+  width: 80%;
+  background-color: black;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 40px;
+  cursor: pointer;
+  margin: 0 auto;
 }
 
 .player-component{

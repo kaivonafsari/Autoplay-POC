@@ -32,9 +32,9 @@ class Watch extends Component {
     return (
       <div className="watch">
         Watch Page
-        <button className="pause-btn" onClick={this.pauseOrPlayVideo}>
+        <div className="pause-btn" onClick={this.pauseOrPlayVideo}>
           {`${this.props.videoState == "playing" ? "Pause" : "Play"} Music Video`}
-        </button>
+        </div>
       </div>
     );
   }
