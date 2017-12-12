@@ -57,6 +57,10 @@ class App extends Component {
         this.setState({hasAutoPlay: false});
         return false;
       });
+    } else {
+      //if there isn't a play promise then assume the browser is lax on autoplay
+      this.setState({hasAutoPlay: true});
+      return true;
     }
 
   }
