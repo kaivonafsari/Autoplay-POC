@@ -127,7 +127,6 @@ class Player extends Component {
   */
   play(){
     this.refs.player.play();
-    this.props.actions.storeVideoState('playing');
   }
 
   /*
@@ -135,7 +134,6 @@ class Player extends Component {
   */
   pause(){
     this.refs.player.pause();
-    this.props.actions.storeVideoState('paused');
   }
 
 
