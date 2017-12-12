@@ -21,6 +21,12 @@ class App extends Component {
     this.checkIfHasAutoplay();
   }
 
+  /*
+  We check for autoplay as soon as possible in the app so we have an empty video player
+  in the top level component - I also had issues when doing this check with the player component
+
+  @return    boolean     does the client have autoplay or not
+  */
   checkIfHasAutoplay() {
     this.refs.testPlayer.load();
     // Test for autoplay support with our content player.

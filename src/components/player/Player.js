@@ -200,7 +200,6 @@ class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("--componentWillReceiveProps", nextProps, this.props);
   	if (nextProps.playerVisible && !this.state.adStarted && (nextProps.hasAutoPlay || nextProps.hasUserGesture)) {
   		this.beginAds();
   	} else if (!nextProps.playerVisible && this.props.playerVisible) {
