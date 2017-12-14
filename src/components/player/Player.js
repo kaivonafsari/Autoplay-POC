@@ -126,7 +126,6 @@ class Player extends Component {
 	DFP event handler
   */
   play(){
-    console.log("--play");
     this.refs.player.play();
   }
 
