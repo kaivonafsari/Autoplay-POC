@@ -14,7 +14,6 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      hasAutoPlay: false
     }
     this.userAgent = new parser().getResult();
   }
@@ -44,22 +43,22 @@ class App extends Component {
 
         //Only has autoplay if it gets in here and isn't Safari 11
         if (browser.name === "Safari" && parseInt(browser.major, 10) >= 11) {
-          this.setState({hasAutoPlay: false});
+          this.props.actions.storeHasAutoplay(false);
           return false
         } else {
-          this.setState({hasAutoPlay: true});
+          this.props.actions.storeHasAutoplay(true);
           return true;
 
         }
       })
       .catch(error => {
         // Auto-play was prevented
-        this.setState({hasAutoPlay: false});
+        this.props.actions.storeHasAutoplay(false);
         return false;
       });
     } else {
       //if there isn't a play promise then assume the browser is lax on autoplay
-      this.setState({hasAutoPlay: true});
+      this.props.actions.storeHasAutoplay(true);
       return true;
     }
 
@@ -82,7 +81,7 @@ class App extends Component {
           src={emptyBase64}>
         </video>
         
-        <Player {...this.props} hasAutoPlay={this.state.hasAutoPlay} />
+        <Player {...this.props} />
         {/*Child components of app*/}
         { React.Children.map(this.props.children, (child) => {
             // console.log("==== working on child: ", child);

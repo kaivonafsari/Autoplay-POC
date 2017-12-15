@@ -11,6 +11,10 @@ export default(store = (new Immutable.Map()), payload) => {
 			store = store.set('playerVisible', payload.boolean)
 			return store;
 
+		case 'HAS_AUTOPLAY':
+			store = store.set('hasAutolay', payload.boolean)
+			return store;
+
 		case 'VIDEO_SRC':
 			store = store.set('videoSource', payload.src)
 			return store;

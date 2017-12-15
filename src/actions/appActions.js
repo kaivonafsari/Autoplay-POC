@@ -8,6 +8,13 @@ export const hasUserGesture = () => {
 	};
 }
 
+export const storeHasAutoplay = (boolean) => {
+	return {
+		type: "HAS_AUTOPLAY",
+		boolean
+	}
+}
+
 export const storePlayerVisible = (boolean) => {
 	return {
 		type: 'PLAYER_VISIBLE',

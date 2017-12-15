@@ -245,7 +245,8 @@ function mapStateToProps(state, props){
     playerVisible: state.AppReducers.get('playerVisible'),
     videoSource: state.AppReducers.get('videoSource'),
     adState: state.AppReducers.get('adState'),
-    videoState: state.AppReducers.get('videoState')
+    videoState: state.AppReducers.get('videoState'),
+    hasAutoPlay: state.AppReducers.get('hasAutoplay')
   }
 }
 
