@@ -12,7 +12,7 @@ export default(store = (new Immutable.Map()), payload) => {
 			return store;
 
 		case 'HAS_AUTOPLAY':
-			store = store.set('hasAutolay', payload.boolean)
+			store = store.set('hasAutoplay', payload.boolean)
 			return store;
 
 		case 'VIDEO_SRC':

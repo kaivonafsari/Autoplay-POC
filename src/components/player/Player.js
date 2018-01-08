@@ -17,7 +17,8 @@ let AD_TAG = {
   user: {isLoggedIn: 0, gender: 'm', age: 35, ppid: 'shdhsjdhskjds'},
   app: {version: '2.0', build: '13'},
   playlistid: '0043029483',
-  qa: localStorage.getItem('forceAd') || ""
+  qa: localStorage.getItem('forceAd') || "",
+  hasSound: false
 }
 
 class Player extends Component {
@@ -82,12 +83,27 @@ class Player extends Component {
   */
   beginAds(){
     if (this.state.adStarted) { return };
-  	this.setVideoSrc();
-  	this.refs.player.load();
+    this.setVideoSrc();
+    this.refs.player.load();
     this.setupDFP();
-    this.ads.request(AD_TAG);
+    
+    let updatedAdTag = this.changeAdTag(AD_TAG);
+    this.ads.request(updatedAdTag);
     this.setState({adStarted: true});
     this.props.actions.storeAdState('playing');
+  }
+
+  /*
+  Have a silent ad if there is no autoplay and no gesture
+
+  @AD_TAG     Object      AdTag needed by DFP
+  @return     Object      returns an adTag config
+  */
+  changeAdTag(AD_TAG){
+    if (this.props.hasAutoplay || this.props.hasUserGesture){
+      AD_TAG.hasSound = true;
+    }
+      return AD_TAG;
   }
 
   /*
@@ -119,7 +135,9 @@ class Player extends Component {
     this.props.actions.storeVideoState('ended');
     this.setVideoSrc();
     this.refs.player.load();
-    this.ads.request(AD_TAG);
+    
+    let updatedAdTag = this.changeAdTag(AD_TAG);
+    this.ads.request(updatedAdTag);
   }
 
   /*
