@@ -26,8 +26,7 @@ class Player extends Component {
   constructor(props){
     super(props);
     this.state = {
-      playerVisible: false,
-      adStarted: false
+      playerVisible: false
     };
     this.userAgent = new parser().getResult();
     this._videoEvents = [
@@ -45,6 +44,7 @@ class Player extends Component {
     this.onTimeUpdate = this.onTimeUpdate.bind(this);
     this.beginAds = this.beginAds.bind(this);
     this.onAllContentComplete = this.onAllContentComplete.bind(this);
+    this.adsStarted = false;
 
     this.eventListenerCbs = {
       ALL_ADS_COMPLETE: this.onAllAdsComplete,
@@ -126,14 +126,15 @@ class Player extends Component {
 	Begin ad playback
   */
   beginAds(){
-    if (this.state.adStarted) { return };
+    if (this.adsStarted) { return };
     this.setVideoSrc();
     this.refs.player.load();
     this.setupDFP();
     
     let updatedAdTag = this.changeAdTag(AD_TAG);
     this.ads.request(updatedAdTag);
-    this.setState({adStarted: true});
+    this.adsStarted = true;
+    this.forceUpdate();
     this.props.actions.storeAdState('playing');
   }
 
@@ -244,13 +245,14 @@ class Player extends Component {
   stopAndHidePlayer(){
     this.refs.player.pause();
     this.destroyDFP();
-    this.setState({playerVisible: false, adStarted: false});
+    this.adsStarted = false
+    this.setState({playerVisible: false});
     this.props.actions.storeVideoState(null);
     this.props.actions.storeAdState(null);
   }
 
   componentWillReceiveProps(nextProps){
-  	if (nextProps.playerVisible && !this.state.adStarted && (nextProps.hasAutoPlay || nextProps.hasUserGesture)) {
+  	if (nextProps.playerVisible && !this.adsStarted && (nextProps.hasAutoPlay || nextProps.hasUserGesture)) {
   		this.beginAds();
   	} else if (!nextProps.playerVisible && this.props.playerVisible) {
   		this.stopAndHidePlayer();
@@ -267,7 +269,7 @@ class Player extends Component {
 
     let videoPosterStyles = classnames({
     	"video-poster": true,
-    	"visible": !this.props.hasAutoPlay && !this.state.adStarted && this.props.playerVisible
+    	"visible": !this.props.hasAutoPlay && !this.adsStarted && this.props.playerVisible
     })
 
     return (

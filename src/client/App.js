@@ -8,9 +8,6 @@ import * as AppActions from '../actions/appActions';
 import Player from '../components/player/Player';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-  }
 
   render() {
     return (
