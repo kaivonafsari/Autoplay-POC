@@ -58,6 +58,7 @@ class App extends Component {
       });
     } else {
       //if there isn't a play promise then assume the browser is lax on autoplay
+      this.refs.testPlayer.pause();
       this.props.actions.storeHasAutoplay(true);
       return true;
     }

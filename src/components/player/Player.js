@@ -189,17 +189,7 @@ class Player extends Component {
   */
   destroyDFP(){
     if (this.ads){
-      let dfpEvents= dfp.events.AdEvent;
-
-      //these is a remove all event listeners
-      Object.keys(dfpEvents).forEach((key)=>{
-        if (this.eventListenerCbs[key]){
-          this.ads.removeEventListener(dfpEvents[key], this.eventListenerCbs[key]); 
-        }
-      });
-
       this.ads.destroy();
-      this.ads = null;
     }
   }
 
