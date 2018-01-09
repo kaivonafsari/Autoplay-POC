@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as AppActions from '../../actions/appActions';
 import videoArray from '../../services/mockService';
+import parser from 'ua-parser-js';
 
 let AD_TAG = {
   adUnitCode: '/40576787/oo/dt/html5',
@@ -28,7 +29,7 @@ class Player extends Component {
       playerVisible: false,
       adStarted: false
     };
-
+    this.userAgent = new parser().getResult();
     this._videoEvents = [
         "play",
         "pause",
@@ -55,8 +56,51 @@ class Player extends Component {
   }
 
   componentDidMount(){
+    this.checkIfHasAutoplay();
     this.props.actions.storePlayerRef(this.refs.player);
     this._videoEvents.forEach((evt) => this.refs.player.addEventListener(evt, this.playerEventHandlers));
+  }
+
+  /*
+  As soon as component mounts check if there is autoplay available
+
+  @return    boolean     does the client have autoplay or not
+  */
+  checkIfHasAutoplay() {
+    this.refs.player.load();
+    // Test for autoplay support with our content player.
+
+    /*make a note about this section, since the promise is async we cannot setup DFP inside the promise*/
+    let playPromise = this.refs.player.play();
+
+    if (playPromise !== undefined) {
+      playPromise.then((res) => {
+        // Automatic playback started!
+        this.refs.player.pause();
+        let browser = this.userAgent.browser;
+
+        //Only has autoplay if it gets in here and isn't Safari 11
+        if (browser.name === "Safari" && parseInt(browser.major, 10) >= 11) {
+          this.props.actions.storeHasAutoplay(false);
+          return false
+        } else {
+          this.props.actions.storeHasAutoplay(true);
+          return true;
+
+        }
+      })
+      .catch(error => {
+        // Auto-play was prevented
+        this.props.actions.storeHasAutoplay(false);
+        return false;
+      });
+    } else {
+      //if there isn't a play promise then assume the browser is lax on autoplay
+      this.refs.player.pause();
+      this.props.actions.storeHasAutoplay(true);
+      return true;
+    }
+
   }
 
   playerEventHandlers(evt){
@@ -233,7 +277,7 @@ class Player extends Component {
           <video id="player" className={playerStyles} controls={true}
             ref="player"
             playsInline={true}
-            src={this.props.videoSource}>
+            src={this.props.videoSource || "//h264-aws.vevo.com/v3/h264/2016/06/USCJY1531545/5fae8f50-1dc0-4a2b-9b28-3c037de055bc/uscjy1531545_high_1280x720_h264_2000_aac_128.mp4"}>
           </video>
           <div className="adContainer" ref="adContainer"></div>
           <div onClick={this.beginAds} className={videoPosterStyles}>
