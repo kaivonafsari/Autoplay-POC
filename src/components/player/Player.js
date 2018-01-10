@@ -43,8 +43,9 @@ class Player extends Component {
     this.play = this.play.bind(this);
     this.onTimeUpdate = this.onTimeUpdate.bind(this);
     this.beginAds = this.beginAds.bind(this);
+    this.startVideo = this.startVideo.bind(this);
     this.onAllContentComplete = this.onAllContentComplete.bind(this);
-    this.adsStarted = false;
+    this.videoStarted = false;
 
     this.eventListenerCbs = {
       ALL_ADS_COMPLETE: this.onAllAdsComplete,
@@ -115,6 +116,10 @@ class Player extends Component {
         case "error":
           this.props.actions.storeVideoState('error');
           break;
+        case "ended":
+          if (this.ads.error){
+            this.onAllContentComplete();
+          }
 
         default:
           break;
@@ -123,19 +128,33 @@ class Player extends Component {
   }
 
   /*
+  Begin ads if there is no DFP error, otherwise play the video
+  */
+  startVideo(){
+    if (this.videoStarted) { return };
+    this.videoStarted = true;
+    if (this.ads && this.ads.error){
+      this.play();
+      return;
+    } else {
+      this.beginAds();
+    }
+  }
+
+  /*
 	Begin ad playback
   */
   beginAds(){
-    if (this.adsStarted) { return };
     this.setVideoSrc();
     this.refs.player.load();
     this.setupDFP();
     
-    let updatedAdTag = this.changeAdTag(AD_TAG);
-    this.ads.request(updatedAdTag);
-    this.adsStarted = true;
-    this.forceUpdate();
-    this.props.actions.storeAdState('playing');
+    if (this.ads && !this.ads.error){
+      let updatedAdTag = this.changeAdTag(AD_TAG);
+      this.ads.request(updatedAdTag);
+      this.props.actions.storeAdState('playing');
+      this.forceUpdate();
+    }
   }
 
   /*
@@ -180,7 +199,10 @@ class Player extends Component {
     this.props.actions.storeVideoState('ended');
     this.setVideoSrc();
     this.refs.player.load();
-    
+    if (this.ads && this.ads.error){
+      this.play();
+      return;
+    }
     let updatedAdTag = this.changeAdTag(AD_TAG);
     this.ads.request(updatedAdTag);
   }
@@ -218,6 +240,10 @@ class Player extends Component {
 
     if (!this.ads){
       this.ads = initializeAds(adsConfig);
+      if (this.ads.error){
+        this.play();
+        return;
+      }
       
       let dfpEvents= dfp.events.AdEvent;
 
@@ -233,7 +259,7 @@ class Player extends Component {
 	Tears down DFP
   */
   destroyDFP(){
-    if (this.ads){
+    if (this.ads && !this.ads.error){
       this.ads.destroy();
     }
   }
@@ -245,15 +271,16 @@ class Player extends Component {
   stopAndHidePlayer(){
     this.refs.player.pause();
     this.destroyDFP();
-    this.adsStarted = false
+    this.videoStarted = false
     this.setState({playerVisible: false});
     this.props.actions.storeVideoState(null);
     this.props.actions.storeAdState(null);
+    if (this.ads && this.ads.error){ this.refs.player.load() };
   }
 
   componentWillReceiveProps(nextProps){
-  	if (nextProps.playerVisible && !this.adsStarted && (nextProps.hasAutoPlay || nextProps.hasUserGesture)) {
-  		this.beginAds();
+  	if (nextProps.playerVisible && !this.videoStarted && (nextProps.hasAutoPlay || nextProps.hasUserGesture)) {
+  		this.startVideo();
   	} else if (!nextProps.playerVisible && this.props.playerVisible) {
   		this.stopAndHidePlayer();
   	}
@@ -269,7 +296,7 @@ class Player extends Component {
 
     let videoPosterStyles = classnames({
     	"video-poster": true,
-    	"visible": !this.props.hasAutoPlay && !this.adsStarted && this.props.playerVisible
+    	"visible": !this.props.hasAutoPlay && !this.videoStarted && this.props.playerVisible
     })
 
     return (
@@ -282,7 +309,7 @@ class Player extends Component {
             src={this.props.videoSource || "//h264-aws.vevo.com/v3/h264/2016/06/USCJY1531545/5fae8f50-1dc0-4a2b-9b28-3c037de055bc/uscjy1531545_high_1280x720_h264_2000_aac_128.mp4"}>
           </video>
           <div className="adContainer" ref="adContainer"></div>
-          <div onClick={this.beginAds} className={videoPosterStyles}>
+          <div onClick={this.startVideo} className={videoPosterStyles}>
             <div className="poster-text">
               VIDEO POSTER
             </div>
